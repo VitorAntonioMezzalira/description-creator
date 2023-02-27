@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Descrições - Cadore</title>
+  <style>
+
+    * {
+      padding: 0;
+      margin:0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      font: 62.5% Helvetica, sans-serif;
+    }
+
+    .interface {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      justify-content: center;
+      background-color: #dddddd;
+      padding: 1rem 1rem;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+    }
+
+    .main {
+      background-color: #eeeeee;
+    }
+
+    .main-container{
+      width: 1100px;
+      margin: 0 auto;
+      padding : 2rem;
+      background-color: #ffffff;
+    }
+
+    .description-creator-inputs h3 {
+      font-size: 2rem;
+      padding: .5rem 0 .5rem 1rem;
+      background-color: #dddddd;
+    }
+
+    .opcoes {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+
+    .opcao {
+      margin: .5rem;
+      width: 20rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .opcao input[type="checkbox"] {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+    .opcao label {
+      cursor: pointer;
+    }
+
+    .opcao input[type="text"] {
+      height: 2rem; 
+      margin: 0 1rem 0 1rem;
+      width: 100%;
+    }
+
+    .opcao input[type="radio"] {
+      width: 2rem;
+      height: 2rem; 
+      margin-right: 1rem;
+    }
+
+    .description-creator-output {
+      margin: 1rem 0 0 0;
+      justify-content: space-between;
+      flex-direction: column;   
+    }
+
+    .description-creator-output-header {
+      display: flex;
+      justify-content: space-between;
+      padding: .5rem 1rem .5rem 1rem;
+      background-color: #dddddd;
+    }
+
+    .description-creator-output-header h2 {
+      font-size: 2rem;
+    }
+
+    .description-creator-output-header button {
+      padding: 0 1rem;
+    }
+
+    #output-descricao {
+      margin-top: 1rem;
+      width: 100%;
+      font-size: 2rem;
+      padding: 1rem;
+    }
+
+    .footer {
+      background-color: #dddddd;
+      padding: .5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer p {
+      font-size: 1.5rem;
+    }
+
+  </style>
+</head>
+<body>
+  
+  <div class="interface">
+
+    <div class="header">
+      <h1>Gerador de Descrições</h1>
+    </div>
+
+    <div class="main">
+      <div class="main-container">
+        <div class="description-creator-inputs">
+          <div class="condicoes-imovel">
+            <h3>Metragem do imóvel</h3>
+            <div class="condicoes-imovel-opcoes opcoes">
+              <div class="opcao"><input name="metragem" id="metragem" type="text"><label for="metragem">m²</label></div>
+            </div>
+          </div>
+          <div class="condicoes-imovel">
+            <h3>Condições do Imóvel</h3>
+            <div class="condicoes-imovel-opcoes opcoes">
+
+              <div class="opcao"><input checked type="radio" id="condicoes-imovel-nenhum" name="condicao-imovel" value="nenhum">
+              <label for="condicoes-imovel-nenhum">nenhum</label></div>
+              <div class="opcao"><input type="radio" id="mobiliado" name="condicao-imovel" value="mobiliado">
+              <label for="mobiliado">mobiliado</label></div>
+              <div class="opcao"><input type="radio" id="semimobiliado" name="condicao-imovel" value="semimobiliado">
+              <label for="semimobiliado">semimobiliado</label></div>
+
+            </div>
+          </div>
+          <div class="tipo-imovel">
+            <h3>Tipo do Imóvel</h3>
+            <div class="tipo-imovel-opcoes opcoes">
+
+              <div class="opcao"><input checked type="radio" id="tipo-imovel-nenhum" name="tipo-imovel" value="nenhum">
+              <label for="tipo-imovel-nenhum">nenhum</label></div>
+              <div class="opcao"><input type="radio" id="casa" name="tipo-imovel" value="Casa">
+              <label for="casa">casa</label></div>
+              <div class="opcao"><input type="radio" id="sala-terrea" name="tipo-imovel" value="Sala térrea">
+              <label for="sala-terrea">sala térrea</label></div>
+              <div class="opcao"><input type="radio" id="apartamento" name="tipo-imovel" value="Apartamento">
+              <label for="apartamento">apartamento</label></div>
+              <div class="opcao"><input type="radio" id="sobrado-individual" name="tipo-imovel" value="Sobrado individual">
+              <label for="sobrado-individual">sobrado individual</label></div>
+              <div class="opcao"><input type="radio" id="sobrado-entrada-coletiva" name="tipo-imovel" value="Sobrado entrada coletiva">
+              <label for="sobrado-entrada-coletiva">sobrado entrada coletiva</label></div>
+              <div class="opcao"><input type="radio" id="terreno" name="tipo-imovel" value="Terreno">
+              <label for="terreno">terreno</label></div>
+              <div class="opcao"><input type="radio" id="box-geragem" name="tipo-imovel" value="Box/garagem">
+              <label for="box-geragem">box/garagem</label></div>
+              <div class="opcao"><input type="radio" id="pavilhao" name="tipo-imovel" value="Pavilhão">
+              <label for="pavilhao">pavilhão</label></div>
+              <div class="opcao"><input type="radio" id="chacara" name="tipo-imovel" value="Chácara">
+              <label for="chacara">chácara</label></div>
+              <div class="opcao"><input type="radio" id="casa-residencial" name="tipo-imovel" value="Casa residencial">
+              <label for="casa-residencial">casa residencial</label></div>
+              <div class="opcao"><input type="radio" id="casa-comercial" name="tipo-imovel" value="Casa comercial">
+              <label for="casa-comercial">casa comercial</label></div>
+              <div class="opcao"><input type="radio" id="cobertura" name="tipo-imovel" value="Cobertura">
+              <label for="cobertura">cobertura</label></div>
+              <div class="opcao"><input type="radio" id="kitinet" name="tipo-imovel" value="Kitinet">
+              <label for="kitinet">kitinet</label></div>
+              <div class="opcao"><input type="radio" id="sala-aerea" name="tipo-imovel" value="Sala aérea">
+              <label for="sala-aerea">sala aérea</label></div>
+              <div class="opcao"><input type="radio" id="sobreloja" name="tipo-imovel" value="Sobreloja">
+              <label for="sobreloja">sobreloja</label></div>
+              <div class="opcao"><input type="radio" id="fazenda" name="tipo-imovel" value="Fazenda">
+              <label for="fazenda">fazenda</label></div>
+              <div class="opcao"><input type="radio" id="jk" name="tipo-imovel" value="JK">
+              <label for="jk">JK</label></div>
+              <div class="opcao"><input type="radio" id="flat" name="tipo-imovel" value="Flat">
+              <label for="flat">flat</label></div>
+              <div class="opcao"><input type="radio" id="studio" name="tipo-imovel" value="Studio">
+              <label for="studio">studio</label></div>
+
+            </div>
+          </div>
+          <div class="suites">
+            <h3>Suítes</h3>
+            <div class="suites-opcoes opcoes">
+
+              <div class="opcao"><input checked type="radio" id="suites-nenhum" name="suites" value="nenhum">
+              <label for="suites-nenhum">nenhum</label></div>
+              <div class="opcao"><input type="radio" id="uma-suite" name="suites" value="uma suíte">
+              <label for="uma-suite">uma suítes</label></div>
+              <div class="opcao"><input type="radio" id="duas-suites" name="suites" value="duas suítes">
+              <label for="duas-suites">duas suítes</label></div>
+              <div class="opcao"><input type="radio" id="tres-suites" name="suites" value="três suítes">
+              <label for="tres-suites">três suítes</label></div>
+
+            </div>
+          </div>
+          <div class="dormitorios">
+            <h3>Dormitórios</h3>
+            <div class="dormitorios-opcoes opcoes">
+
+              <div class="opcao"><input checked type="radio" id="dormitorios-nenhum" name="dormitorios" value="nenhum">
+              <label for="dormitorios-nenhum">nenhum</label></div>
+              <div class="opcao"><input type="radio" id="um-dormitorio" name="dormitorios" value="um dormitório">
+              <label for="um-dormitorio">um dormitório</label></div>
+              <div class="opcao"><input type="radio" id="dois-dormitorios" name="dormitorios" value="dois dormitórios">
+              <label for="dois-dormitorios">dois dormitórios</label></div>
+              <div class="opcao"><input type="radio" id="tres-dormitorios" name="dormitorios" value="três dormitórios">
+              <label for="tres-dormitorios">três dormitórios</label></div>
+              <div class="opcao"><input type="radio" id="quatro-dormitorios" name="dormitorios" value="quatro dormitórios">
+              <label for="quatro-dormitorios">quadro dormitórios</label></div>
+              <div class="opcao"><input type="radio" id="cindo-dormitorios" name="dormitorios" value="três dormitórios">
+              <label for="cindo-dormitorios">cinco dormitórios</label></div>
+
+            </div>
+          </div>
+          <div class="ambientes">
+            <h3>Outros ambientes</h3>
+            <div class="ambientes-opcoes opcoes">
+
+              <div class="opcao"><input type="checkbox" name="sala-estar" id="sala-estar"><label for="sala-estar">sala de estar</label></div>
+              <div class="opcao"><input type="checkbox" name="sala-jantar" id="sala-jantar"><label for="sala-jantar">sala de jantar</label></div>
+              <div class="opcao"><input type="checkbox" name="sala-estar-jantar" id="sala-estar-jantar"><label for="sala-estar-jantar">sala de estar e jantar integradas</label></div>
+              <div class="opcao"><input type="checkbox" name="cozinha" id="cozinha"><label for="cozinha">cozinha</label></div>
+              <div class="opcao"><input type="checkbox" name="sala-dois-ambientes" id="sala-dois-ambientes"><label for="sala-dois-ambientes">sala dois ambientes</label></div>
+              <div class="opcao"><input type="checkbox" name="sacada-aberta" id="sacada-aberta"><label for="sacada-aberta">sacada aberta</label></div>
+              <div class="opcao"><input type="checkbox" name="sacada-fechada" id="sacada-fechada"><label for="sacada-fechada">sacada fechada</label></div>
+              <div class="opcao"><input type="checkbox" name="area-servico" id="area-servico"><label for="area-servico">área de serviço</label></div>
+              <div class="opcao"><input type="checkbox" name="um-banheiro" id="um-banheiro"><label for="um-banheiro">um banheiro</label></div>
+              <div class="opcao"><input type="checkbox" name="dois-banheiros" id="dois-banheiros"><label for="dois-banheiros">dois banheiros</label></div>
+              <div class="opcao"><input type="checkbox" name="escritorio" id="escritorio"><label for="escritorio">escritório</label></div>
+              <div class="opcao"><input type="checkbox" name="closet" id="closet"><label for="closet">closet</label></div>
+              <div class="opcao"><input type="checkbox" name="lavabo" id="lavabo"><label for="lavabo">lavabo</label></div>
+              <div class="opcao"><input type="checkbox" name="mezanino" id="mezanino"><label for="mezanino">mezanino</label></div>
+
+            </div>
+          </div>
+          <div class="descricao">
+            <h3>Descrição</h3>
+            <div class="descricao-opcoes opcoes">
+
+              <div class="opcao"><input type="checkbox" name="churrasqueira-externa" id="churrasqueira-externa"><label for="churrasqueira-externa">churrasqueira externa</label></div>
+              <div class="opcao"><input type="checkbox" name="box-banheiro" id="box-banheiro"><label for="box-banheiro">box no banheiro</label></div>
+              <div class="opcao"><input type="checkbox" name="terraco" id="terraco"><label for="terraco">terraço</label></div>
+              <div class="opcao"><input type="checkbox" name="hidromassagem" id="hidromassagem"><label for="hidromassagem">hidromassagem</label></div>
+              <div class="opcao"><input type="checkbox" name="rebaixe-em-gesso" id="rebaixe-em-gesso"><label for="rebaixe-em-gesso">rebaixe em gesso</label></div>
+              <div class="opcao"><input type="checkbox" name="churrasqueira-interna" id="churrasqueira-interna"><label for="churrasqueira-interna">churrasqueira interna</label></div>
+              <div class="opcao"><input type="checkbox" name="lareira" id="lareira"><label for="lareira">lareira</label></div>
+              <div class="opcao"><input type="checkbox" name="imovel-frente" id="imovel-frente"><label for="imovel-frente">imóvel de frente</label></div>
+              <div class="opcao"><input type="checkbox" name="imovel-fundos" id="imovel-fundos"><label for="imovel-fundos">imóvel de fundos</label></div>
+              <div class="opcao"><input type="checkbox" name="imovel-esquina" id="imovel-esquina"><label for="imovel-esquina">imóvel de esquina</label></div>
+
+            </div>
+          </div>
+          <div class="garagem">
+            <h3>Garagem</h3>
+            <div class="garagem-opcoes opcoes">
+              <div class="opcao"><input type="checkbox" name="uma-garagem" id="uma-garagem"><label for="uma-garagem">uma garagem</label></div>
+              <div class="opcao"><input type="checkbox" name="duas-garagens" id="duas-garagens"><label for="duas-garagens">duas garagens</label></div>
+              <div class="opcao"><input type="checkbox" name="garagem-coberta" id="garagem-coberta"><label for="garagem-coberta">garagem coberta</label></div>
+              <div class="opcao"><input type="checkbox" name="garagem-dupla" id="garagem-dupla"><label for="garagem-dupla">garagem dupla</label></div>
+              <div class="opcao"><input type="checkbox" name="garagem-lado-lado" id="garagem-lado-lado"><label for="garagem-lado-lado">garagem lado a lado</label></div>
+              <div class="opcao"><input type="checkbox" name="estacionamento" id="estacionamento"><label for="estacionamento">estacionamento</label></div>
+              <div class="opcao"><input type="checkbox" name="garagem-externa" id="garagem-externa"><label for="garagem-externa">garagem externa</label></div>
+              <div class="opcao"><input type="checkbox" name="box-disponivel-locacao" id="box-disponivel-locacao"><label for="box-disponivel-locacao">box disponível para locação</label></div>
+            </div>
+          </div>
+          <div class="piso">
+            <h3>Piso</h3>
+            <div class="piso-opcoes opcoes">
+              <div class="opcao"><input type="checkbox" name="ceramica" id="ceramica"><label for="ceramica">cerâmica</label></div>
+              <div class="opcao"><input type="checkbox" name="laminado" id="laminado"><label for="laminado">laminado</label></div>
+              <div class="opcao"><input type="checkbox" name="parquet" id="parquet"><label for="parquet">parquet</label></div>
+              <div class="opcao"><input type="checkbox" name="porcelanato" id="porcelanato"><label for="porcelanato">porcelanato</label></div>
+              <div class="opcao"><input type="checkbox" name="paviflex" id="paviflex"><label for="paviflex">paviflex</label></div>
+              <div class="opcao"><input type="checkbox" name="vinilico" id="vinilico"><label for="vinilico">vinílico</label></div>
+              <div class="opcao"><input type="checkbox" name="taboao" id="taboao"><label for="taboao">taboão</label></div>
+              <div class="opcao"><input type="checkbox" name="carpete" id="carpete"><label for="carpete">carpete</label></div>
+              <div class="opcao"><input type="checkbox" name="decorflex" id="decorflex"><label for="decorflex">decorflex</label></div>
+            </div>
+          </div>
+          <div class="posicao-solar">
+            <h3>Posição Solar Predominante</h3>
+            <div class="posicao-solar-opcoes opcoes">
+              <div class="opcao"><input type="checkbox" name="norte" id="norte"><label for="norte">norte</label></div>
+              <div class="opcao"><input type="checkbox" name="sul" id="sul"><label for="sul">sul</label></div>
+              <div class="opcao"><input type="checkbox" name="leste" id="leste"><label for="leste">leste</label></div>
+              <div class="opcao"><input type="checkbox" name="oeste" id="oeste"><label for="oeste">oeste</label></div>
+            </div>
+          </div>
+          <div class="detalhes-condominio">
+            <h3>Detalhes Condomínio</h3>
+            <div class="detalhes-condominio-opcoes opcoes">
+              <div class="opcao"><input type="checkbox" name="elevador" id="elevador"><label for="elevador">elevador</label></div>
+              <div class="opcao"><input type="checkbox" name="portaria-24" id="portaria-24"><label for="portaria-24">portaria 24h</label></div>
+              <div class="opcao"><input type="checkbox" name="alarme" id="alarme"><label for="alarme">alarme</label></div>
+              <div class="opcao"><input type="checkbox" name="hall-entrada" id="hall-entrada"><label for="hall-entrada">hall entrada</label></div>
+              <div class="opcao"><input type="checkbox" name="patio" id="patio"><label for="patio">pátio</label></div>
+              <div class="opcao"><input type="checkbox" name="predio-cercado" id="predio-cercado"><label for="predio-cercado">prédio cercado</label></div>
+              <div class="opcao"><input type="checkbox" name="piscina" id="piscina"><label for="piscina">piscina</label></div>
+              <div class="opcao"><input type="checkbox" name="academia" id="academia"><label for="academia">academia</label></div>
+              <div class="opcao"><input type="checkbox" name="salao-de-festas" id="salao-de-festas"><label for="salao-de-festas">salão de festas</label></div>
+              <div class="opcao"><input type="checkbox" name="quiosque" id="quiosque"><label for="quiosque">quiosque</label></div>
+              <div class="opcao"><input type="checkbox" name="gas-central" id="gas-central"><label for="gas-central">gás central</label></div>
+              <div class="opcao"><input type="checkbox" name="espera-split" id="espera-split"><label for="espera-split">espera para split</label></div>
+              <div class="opcao"><input type="checkbox" name="espera-agua-quente" id="espera-agua-quente"><label for="espera-agua-quente">espera para água quente</label></div>
+              <div class="opcao"><input type="checkbox" name="calefacao" id="calefacao"><label for="calefacao">calefação</label></div>
+              <div class="opcao"><input type="checkbox" name="brinquedoteca" id="brinquedoteca"><label for="brinquedoteca">brinquedoteca</label></div>
+              <div class="opcao"><input type="checkbox" name="sala-jogos" id="sala-jogos"><label for="sala-jogos">sala de jogos</label></div>
+              <div class="opcao"><input type="checkbox" name="playground" id="playground"><label for="playground">playground</label></div>
+              <div class="opcao"><input type="checkbox" name="quadra-tenis" id="quadra-tenis"><label for="quadra-tenis">quadra tênis</label></div>
+              <div class="opcao"><input type="checkbox" name="quadra-jogos" id="quadra-jogos"><label for="quadra-jogos">quadra jogos</label></div>
+              <div class="opcao"><input type="checkbox" name="junker-instalado" id="junker-instalado"><label for="junker-instalado">junker instalado</label></div>
+              <div class="opcao"><input type="checkbox" name="ar-condicionado-instalado" id="ar-condicionado-instalado"><label for="ar-condicionado-instalado">ar-condicionado instalado</label></div>
+              <div class="opcao"><input type="checkbox" name="quadra-futebol" id="quadra-futebol"><label for="quadra-futebol">quadra futebol</label></div>
+              <div class="opcao"><input type="checkbox" name="bosque" id="bosque"><label for="bosque">bosque</label></div>
+            </div>
+          </div>
+          <div class="referencia">
+            <h3>Referências</h3>
+            <div class="referencia-opcoes">
+  
+            </div>
+          </div>
+        </div>
+        <div class="description-creator-output">
+          <div class="description-creator-output-header"><h2>Descrição gerada</h2><button id="copiar">Copiar</button></div>
+          <textarea id="output-descricao" cols="30" rows="10"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>Todos os direitos reservados</p>
+    </div>
+
+  </div>
+
+  <script>
+
+    function formataListaEmTextoCorrido(itens) {
+        let item = '';
+      
+        for (let i = 0; i < itens.length; i++) {
+          if (i === itens.length - 2) {
+            item += itens[i] + ' e ';
+          } else if (i === itens.length - 1) {
+            item += itens[i];
+          } else {
+            item += itens[i] + ', ';
+          };
+        };
+      
+        return item;
+      }
+
+    function montaDescricoes() {
+      let descricao = [];     
+      const opcoes = document.querySelectorAll('.descricao-opcoes .opcao');
+      opcoes.forEach(opcao => {
+        if (opcao.querySelector('input').checked) {
+          descricao.push(opcao.querySelector('label').textContent);
+        };
+      });
+      return descricao;
+    };
+
+    function montaGaragem() { 
+      let garagem = [];
+      const opcoes = document.querySelectorAll('.garagem-opcoes .opcao');
+      opcoes.forEach(opcao => {
+        if (opcao.querySelector('input').checked) {
+          garagem.push(opcao.querySelector('label').textContent);
+        };
+      });
+      return garagem;
+    };
+
+    function montaPiso() { 
+      let piso = [];    
+      const opcoes = document.querySelectorAll('.piso-opcoes .opcao');
+      opcoes.forEach(opcao => {
+        if (opcao.querySelector('input').checked) {
+          piso.push(opcao.querySelector('label').textContent);
+        };
+      });
+      return piso;
+    };
+
+    function montaPosicaoSolar() { 
+      let posicaoSolar = [];    
+      const opcoes = document.querySelectorAll('.posicao-solar-opcoes .opcao');
+      opcoes.forEach(opcao => {
+        if (opcao.querySelector('input').checked) {
+          posicaoSolar.push(opcao.querySelector('label').textContent);
+        };
+      });
+      return posicaoSolar;
+    };
+
+    function montaAmbientes() { 
+      let ambientes = [];    
+      const opcoes = document.querySelectorAll('.ambientes-opcoes .opcao');
+      opcoes.forEach(opcao => {
+        if (opcao.querySelector('input').checked) {
+          ambientes.push(opcao.querySelector('label').textContent);
+        };
+      });
+      return ambientes;
+    };
+
+    function montaDetalhesCondominio() { 
+      let detalhesCondominio = [];    
+      const opcoes = document.querySelectorAll('.detalhes-condominio-opcoes .opcao');
+      opcoes.forEach(opcao => {
+        if (opcao.querySelector('input').checked) {
+          detalhesCondominio.push(opcao.querySelector('label').textContent);
+        };
+      });
+      return detalhesCondominio;
+    };
+
+    function montaTudo() {
+
+      let texto = '';
+
+      let ambientes = [];
+      let descricao = [];
+      let piso = [];
+
+      let generoTipoImovel = '';
+      let condicaoImovel = Array.from(document.getElementsByName('condicao-imovel')).find(condicao => condicao.checked);
+      let tipoImovel = Array.from(document.getElementsByName('tipo-imovel')).find(tipo => tipo.checked);
+      let suites = Array.from(document.getElementsByName('suites')).find(suite => suite.checked);
+      let dormitorios = Array.from(document.getElementsByName('dormitorios')).find(dormitorio => dormitorio.checked);
+
+      if (condicaoImovel.value == 'nenhum') condicaoImovel = undefined;
+      if (tipoImovel.value == 'nenhum') tipoImovel = undefined;
+      if (suites.value == 'nenhum') suites = undefined;
+      if (dormitorios.value == 'nenhum') dormitorios = undefined;
+
+      if (suites != undefined) {
+        ambientes.unshift(suites.value);  
+      }
+
+      if (dormitorios != undefined) {
+        ambientes.unshift(dormitorios.value);  
+      }
+
+      generoTipoImovel = 'M';
+      if (tipoImovel) {
+        
+        tipoImovel = tipoImovel.value;
+        texto = tipoImovel;
+        switch (tipoImovel) {
+          case 'Casa': generoTipoImovel = 'F';
+          case 'Sala térrea': generoTipoImovel = 'F';
+          case 'Chácara': generoTipoImovel = 'F';
+          case 'Casa residencial': generoTipoImovel = 'F';
+          case 'Casa comercial': generoTipoImovel = 'F';
+          case 'Cobertura': generoTipoImovel = 'F';
+          case 'Kitinet': generoTipoImovel = 'F';
+          case 'Sala aérea': generoTipoImovel = 'F';
+          case 'Sobreloja': generoTipoImovel = 'F';
+          case 'Fazenda': generoTipoImovel = 'F';
+          case 'Sobreloja': generoTipoImovel = 'F';
+        }
+      } else {
+        texto = 'Imóvel'
+      }
+
+      if (condicaoImovel) {
+        condicaoImovel = condicaoImovel.value;
+        if (generoTipoImovel == 'F') {
+          if (condicaoImovel.value == 'mobiliado') {
+            condicaoImovel = 'mobiliada';
+          } else {
+            condicaoImovel = 'semimobiliada';
+          }
+        }
+
+        texto = texto + ' ' + condicaoImovel + ' com';
+
+      }
+
+      let metragem = document.getElementById('metragem').value;
+      if (metragem != '') {
+        texto = texto + ' ' + metragem + ' m², distribuídos em' 
+      }
+
+      ambientes = ambientes.concat(montaAmbientes());
+      if (ambientes.length != 0) {
+        texto = texto + ' ' + formataListaEmTextoCorrido(ambientes) + '.';
+      }
+
+      piso = montaPiso();
+      let detalhes = piso ;
+      detalhes = detalhes.concat(montaDescricoes());
+      detalhes = detalhes.concat(montaGaragem());
+
+      let posicaoSolar = montaPosicaoSolar();
+      if (posicaoSolar.length != 0) {
+        posicaoSolar = 'posição solar ' + formataListaEmTextoCorrido(posicaoSolar);
+        detalhes.push(posicaoSolar);  
+      }
+
+      if (detalhes.length != 0) {
+        detalhes = formataListaEmTextoCorrido(detalhes);
+        if (piso.length != 0) {
+          texto = texto + '\n\nPiso em ' + detalhes + '.';
+        } else {
+          texto = texto + '\n\nDispõem de ' + detalhes.charAt(0).toUpperCase() + detalhes.slice(1) + '.';
+        }
+      }
+
+      detalhesCondominio = montaDetalhesCondominio();
+      if (detalhesCondominio.length != 0) {
+        texto = texto + '\n\nCondomínio com ' + formataListaEmTextoCorrido(detalhesCondominio) + '.';
+      }
+
+      texto = texto + '\n\nAgende sua visita no (54) 3223-0370'
+
+      document.getElementById('output-descricao').value = texto;
+
+    };
+
+    addEventListener('click', (e) => {
+      montaTudo();
+    });
+
+    document.getElementById('copiar').addEventListener('click', (e) => {
+      navigator.clipboard.writeText(document.getElementById('output-descricao').value);
+    })
+
+  </script>
+
+</body>
+</html>
