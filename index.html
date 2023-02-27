@@ -503,18 +503,23 @@
           }
         }
 
-        texto = texto + ' ' + condicaoImovel + ' com';
+        texto = texto + ' ' + condicaoImovel;
 
       }
 
       let metragem = document.getElementById('metragem').value;
       if (metragem != '') {
-        texto = texto + ' ' + metragem + ' m²' 
+        texto = texto + ' com ' + metragem + ' m² privativos' 
+        if (ambientes.length != 0) {
+          texto = texto + ', distribuídos em';
+        } else {
+          texto = texto + '.'
+        }
       }
 
       ambientes = ambientes.concat(montaAmbientes());
       if (ambientes.length != 0) {
-        texto = texto + ', distribuídos em ' + formataListaEmTextoCorrido(ambientes) + '.';
+        texto = texto + ' ' + formataListaEmTextoCorrido(ambientes) + '.';
       }
 
       piso = montaPiso();
