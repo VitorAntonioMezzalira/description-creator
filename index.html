@@ -509,12 +509,12 @@
 
       let metragem = document.getElementById('metragem').value;
       if (metragem != '') {
-        texto = texto + ' ' + metragem + ' m², distribuídos em' 
+        texto = texto + ' ' + metragem + ' m²' 
       }
 
       ambientes = ambientes.concat(montaAmbientes());
       if (ambientes.length != 0) {
-        texto = texto + ' ' + formataListaEmTextoCorrido(ambientes) + '.';
+        texto = texto + ', distribuídos em ' + formataListaEmTextoCorrido(ambientes) + '.';
       }
 
       piso = montaPiso();
